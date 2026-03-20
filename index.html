@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXAloom — Future of Fashion · Kathmandu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300;1,6..96,400&family=Outfit:wght@100;200;300;400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #07070a;
+  --bg2:      #0d0d12;
+  --bg3:      #12121a;
+  --surface:  #16161f;
+  --line:     rgba(255,255,255,.06);
+  --gold:     #c8a96e;
+  --gold2:    #e8cc9a;
+  --glow:     rgba(200,169,110,.12);
+  --white:    #f0ede8;
+  --muted:    #6a6660;
+  --smoke:    #9a9490;
+  --f-body:   'Outfit', sans-serif;
+  --f-serif:  'Bodoni Moda', Georgia, serif;
+  --f-dm:     'DM Serif Display', Georgia, serif;
+  --ease:     cubic-bezier(.16,1,.3,1);
+  --ease2:    cubic-bezier(.87,0,.13,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--f-body);
+  overflow-x:hidden;
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── CURSOR ── */
+#cur,.cur-ring{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%)}
+#cur{width:7px;height:7px;background:var(--gold);transition:width .25s,height .25s,background .25s}
+.cur-ring{width:32px;height:32px;border:1px solid rgba(200,169,110,.5);z-index:9998;transition:width .3s,height .3s}
+.cur-expand #cur{width:48px;height:48px;background:rgba(200,169,110,.15)}
+.cur-expand .cur-ring{width:48px;height:48px;border-color:transparent}
+
+/* ── PRELOADER ── */
+#preloader{
+  position:fixed;inset:0;z-index:10000;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:32px;
+}
+#preloader.out{opacity:0;visibility:hidden;transition:opacity 1s var(--ease),visibility 1s}
+.pre-logo{
+  font-family:var(--f-serif);font-size:2.8rem;font-weight:300;letter-spacing:12px;
+  text-transform:uppercase;color:var(--white);
+  opacity:0;animation:riseIn 1s .2s var(--ease) forwards;
+}
+.pre-logo span{color:var(--gold);font-style:italic}
+.pre-bar-wrap{width:200px;height:1px;background:rgba(255,255,255,.08);overflow:hidden}
+.pre-bar{height:100%;width:0;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:barFill 1.8s .4s var(--ease) forwards}
+.pre-pct{
+  font-family:var(--f-body);font-size:.5rem;font-weight:200;letter-spacing:5px;
+  text-transform:uppercase;color:var(--muted);
+  opacity:0;animation:riseIn .6s .8s forwards;
+}
+@keyframes barFill{to{width:100%}}
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes scanline{0%{top:-10%}100%{top:110%}}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.05)}}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;height:76px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;z-index:100;
+  border-bottom:1px solid transparent;
+  transition:background .5s,border-color .5s;
+}
+nav.stuck{background:rgba(7,7,10,.94);border-bottom-color:var(--line);backdrop-filter:blur(20px)}
+.nav-logo{
+  font-family:var(--f-serif);font-size:1.3rem;font-weight:300;
+  letter-spacing:8px;text-transform:uppercase;color:var(--white);text-decoration:none;
+}
+.nav-logo em{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:38px;list-style:none}
+.nav-links a{
+  font-family:var(--f-body);font-size:.55rem;font-weight:200;
+  letter-spacing:4px;text-transform:uppercase;color:var(--smoke);
+  text-decoration:none;transition:color .3s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-btn{
+  font-family:var(--f-body);font-size:.52rem;font-weight:200;
+  letter-spacing:3px;text-transform:uppercase;color:var(--smoke);
+  background:none;border:none;cursor:none;transition:color .3s;
+}
+.nav-btn:hover{color:var(--gold)}
+.nav-cart-pill{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid rgba(200,169,110,.25);
+  padding:8px 18px;color:var(--gold);
+  font-family:var(--f-body);font-size:.5rem;font-weight:200;
+  letter-spacing:3px;text-transform:uppercase;
+  transition:background .3s,border-color .3s;cursor:none;background:none;
+}
+.nav-cart-pill:hover{background:var(--glow);border-color:var(--gold)}
+
+/* ── HERO ── */
+.hero{
+  height:100vh;position:relative;display:flex;
+  overflow:hidden;background:var(--bg);
+}
+
+/* scanline effect */
+.hero::after{
+  content:'';position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,rgba(200,169,110,.08),transparent);
+  animation:scanline 5s linear infinite;z-index:4;pointer-events:none;
+}
+
+.hero-noise{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:.5;mix-blend-mode:overlay;
+}
+
+.hero-grid{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(200,169,110,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,169,110,.04) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent);
+}
+
+.hero-glow1{
+  position:absolute;top:-20%;left:-10%;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,169,110,.06) 0%,transparent 70%);
+  pointer-events:none;z-index:1;
+}
+.hero-glow2{
+  position:absolute;bottom:-20%;right:-5%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(100,80,200,.04) 0%,transparent 70%);
+  pointer-events:none;z-index:1;
+}
+
+.hero-left{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:0 80px;position:relative;z-index:3;
+}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--f-body);font-size:.5rem;font-weight:200;
+  letter-spacing:6px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:36px;
+  opacity:0;animation:fadeUp .8s .8s var(--ease) forwards;
+}
+.hero-tag-dot{
+  width:5px;height:5px;background:var(--gold);border-radius:50%;
+  animation:pulse 2s ease-in-out infinite;
+}
+
+.hero-h1{
+  font-family:var(--f-serif);
+  font-size:clamp(4rem,8vw,8.5rem);
+  font-weight:300;line-height:.92;
+  letter-spacing:-1px;
+  margin-bottom:36px;
+  opacity:0;animation:fadeUp .9s 1s var(--ease) forwards;
+}
+.hero-h1 .outline{
+  -webkit-text-stroke:1px rgba(240,237,232,.2);
+  color:transparent;
+}
+.hero-h1 .gold-i{font-style:italic;color:var(--gold)}
+
+.hero-sub{
+  font-family:var(--f-dm);font-style:italic;
+  font-size:1.05rem;line-height:1.9;
+  color:rgba(240,237,232,.4);max-width:400px;
+  margin-bottom:52px;
+  opacity:0;animation:fadeUp .9s 1.2s var(--ease) forwards;
+}
+
+.hero-actions{
+  display:flex;align-items:center;gap:28px;
+  opacity:0;animation:fadeUp .9s 1.4s var(--ease) forwards;
+}
+
+.btn-primary{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--gold);color:var(--bg);
+  padding:16px 44px;
+  font-family:var(--f-body);font-size:.55rem;font-weight:400;
+  letter-spacing:4px;text-transform:uppercase;text-decoration:none;
+  position:relative;overflow:hidden;transition:color .4s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:var(--white);
+  transform:translateX(-101%);transition:transform .5s var(--ease2);
+}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary:hover{color:var(--bg)}
+.btn-primary span{position:relative;z-index:1}
+
+.btn-ghost-line{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--f-body);font-size:.53rem;font-weight:200;
+  letter-spacing:3px;text-transform:uppercase;color:var(--smoke);
+  text-decoration:none;border-bottom:1px solid rgba(154,148,144,.2);
+  padding-bottom:4px;transition:color .3s,border-color .3s;
+}
+.btn-ghost-line:hover{color:var(--gold);border-color:var(--gold)}
+
+/* numbers sidebar */
+.hero-nums{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:3px;
+  padding:0 20px;z-index:4;
+  opacity:0;animation:fadeIn 1s 2s forwards;
+}
+.hero-num{
+  font-family:var(--f-body);font-size:.45rem;font-weight:200;
+  letter-spacing:2px;color:rgba(106,102,96,.4);
+  transition:color .3s;cursor:default;
+}
+.hero-num.active,.hero-num:hover{color:var(--gold)}
+
+.hero-right{
+  width:44%;position:relative;z-index:3;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* big floating figure */
+.hero-figure-wrap{
+  position:relative;height:92vh;display:flex;align-items:center;
+  animation:float 7s ease-in-out infinite;
+}
+
+/* rotating badge */
+.hero-badge{
+  position:absolute;bottom:80px;right:80px;
+  width:100px;height:100px;z-index:5;
+  opacity:0;animation:fadeIn 1s 2.2s forwards;
+}
+.hero-badge svg{animation:spinSlow 18s linear infinite}
+
+/* scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:40px;left:80px;
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--f-body);font-size:.48rem;font-weight:200;
+  letter-spacing:4px;text-transform:uppercase;color:var(--muted);
+  z-index:5;opacity:0;animation:fadeIn 1s 2.4s forwards;
+}
+.scroll-line{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:pulse 2.5s ease-in-out infinite;
+}
+
+/* ── MARQUEE ── */
+.marquee-bar{
+  background:transparent;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:14px 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-inner{
+  display:inline-flex;
+  animation:marquee 32s linear infinite;
+}
+.marquee-item{
+  font-family:var(--f-serif);font-style:italic;
+  font-size:.82rem;font-weight:300;letter-spacing:4px;
+  color:rgba(200,169,110,.35);padding:0 52px;
+}
+.marquee-sep{color:rgba(200,169,110,.15);margin:0 4px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── COLLECTIONS ── */
+.collections{padding:130px 60px;background:var(--bg)}
+
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px}
+.sec-eye{
+  font-family:var(--f-body);font-size:.5rem;font-weight:200;
+  letter-spacing:6px;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;
+}
+.sec-eye::before{content:'';width:28px;height:1px;background:var(--gold);flex-shrink:0}
+.sec-title{
+  font-family:var(--f-serif);font-size:clamp(2.4rem,5vw,4.8rem);
+  font-weight:300;line-height:.95;letter-spacing:-0.5px;
+}
+.sec-title em{font-style:italic;color:var(--gold)}
+.sec-sub{
+  font-family:var(--f-dm);font-style:italic;
+  color:var(--muted);font-size:.95rem;
+}
+
+/* asymmetric bento */
+.col-bento{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  grid-template-rows:380px 300px;
+  gap:8px;
+}
+.col-bento > :first-child{grid-row:1/3}
+
+.col-tile{
+  position:relative;overflow:hidden;
+  background:var(--surface);cursor:none;
+}
+.col-tile-inner{
+  width:100%;height:100%;
+  transition:transform 1s var(--ease);
+}
+.col-tile:hover .col-tile-inner{transform:scale(1.06)}
+.col-veil{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(7,7,10,.92) 0%,rgba(7,7,10,.2) 50%,transparent 100%);
+  z-index:2;
+}
+.col-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:26px 28px;z-index:3;
+}
+.col-cat{
+  font-family:var(--f-body);font-size:.48rem;font-weight:200;
+  letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;
+}
+.col-name{
+  font-family:var(--f-serif);font-size:1.6rem;font-weight:300;
+  color:var(--white);letter-spacing:.3px;
+}
+.col-name em{font-style:italic;color:var(--gold2)}
+.col-price{
+  font-family:var(--f-body);font-size:.6rem;font-weight:200;
+  letter-spacing:2px;color:rgba(240,237,232,.45);margin-top:5px;
+}
+.col-arrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--f-body);font-size:.48rem;font-weight:200;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-top:12px;
+  opacity:0;transform:translateX(-8px);
+  transition:opacity .4s,transform .4s;
+}
+.col-tile:hover .col-arrow{opacity:1;transform:translateX(0)}
+
+/* ── PRODUCTS ── */
+.products{padding:0 60px 130px;background:var(--bg)}
+
+.tabs{
+  display:flex;gap:0;border-bottom:1px solid var(--line);
+  margin-bottom:52px;
+}
+.tab{
+  font-family:var(--f-body);font-size:.52rem;font-weight:200;
+  letter-spacing:4px;text-transform:uppercase;color:var(--muted);
+  padding:13px 28px;background:none;border:none;
+  border-bottom:1px solid transparent;margin-bottom:-1px;
+  cursor:none;transition:color .3s,border-color .3s;
+}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:hover{color:var(--gold2)}
+
+.prod-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+}
+.prod{position:relative;cursor:none}
+.prod-img{
+  width:100%;aspect-ratio:3/4;
+  background:var(--surface);
+  overflow:hidden;position:relative;margin-bottom:16px;
+}
+.prod-img-inner{
+  width:100%;height:100%;
+  transition:transform .9s var(--ease);
+}
+.prod:hover .prod-img-inner{transform:scale(1.06)}
+
+.prod-tag{
+  position:absolute;top:14px;left:14px;z-index:2;
+  font-family:var(--f-body);font-size:.45rem;font-weight:300;
+  letter-spacing:3px;text-transform:uppercase;padding:5px 11px;
+}
+.prod-tag.new{background:var(--gold);color:var(--bg)}
+.prod-tag.ltd{background:var(--bg3);color:var(--gold);border:1px solid rgba(200,169,110,.3)}
+
+.prod-fav{
+  position:absolute;top:12px;right:12px;z-index:2;
+  width:30px;height:30px;border:1px solid var(--line);
+  background:rgba(7,7,10,.7);display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;color:var(--smoke);
+  opacity:0;transition:opacity .3s;cursor:none;
+}
+.prod:hover .prod-fav{opacity:1}
+
+.prod-quick{
+  position:absolute;bottom:0;left:0;right:0;z-index:3;
+  background:rgba(200,169,110,.95);color:var(--bg);
+  text-align:center;padding:12px;
+  font-family:var(--f-body);font-size:.48rem;font-weight:400;
+  letter-spacing:5px;text-transform:uppercase;
+  transform:translateY(100%);transition:transform .5s var(--ease);
+}
+.prod:hover .prod-quick{transform:translateY(0)}
+
+.prod-name{
+  font-family:var(--f-serif);font-size:1rem;font-weight:300;
+  margin-bottom:6px;letter-spacing:.2px;
+}
+.prod-name em{font-style:italic;color:var(--gold)}
+.prod-meta{display:flex;justify-content:space-between;align-items:center}
+.prod-price{
+  font-family:var(--f-body);font-size:.6rem;font-weight:200;
+  letter-spacing:2px;color:var(--smoke);
+}
+.prod-dots{display:flex;gap:5px}
+.dot{
+  width:9px;height:9px;border-radius:50%;
+  border:1px solid rgba(240,237,232,.12);
+}
+
+/* ── STATEMENT ── */
+.statement{
+  background:var(--bg2);
+  padding:0 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:100vh;
+}
+.stmt-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 80px 120px 0;
+  border-right:1px solid var(--line);
+}
+.stmt-quote{
+  font-family:var(--f-serif);
+  font-size:clamp(2rem,4vw,4rem);
+  font-weight:300;line-height:1.1;
+  margin-bottom:40px;
+}
+.stmt-quote em{font-style:italic;color:var(--gold)}
+.stmt-body{
+  font-family:var(--f-dm);font-style:italic;
+  font-size:1.05rem;line-height:1.9;
+  color:rgba(240,237,232,.4);max-width:440px;
+  margin-bottom:48px;
+}
+.stmt-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);max-width:400px;
+}
+.stmt-stat{background:var(--bg2);padding:24px 28px}
+.stmt-val{
+  font-family:var(--f-serif);font-size:2.6rem;font-weight:300;
+  color:var(--gold);line-height:1;margin-bottom:4px;
+}
+.stmt-val em{font-style:italic}
+.stmt-label{
+  font-family:var(--f-body);font-size:.48rem;font-weight:200;
+  letter-spacing:4px;text-transform:uppercase;color:var(--muted);
+}
+
+.stmt-right{position:relative;overflow:hidden}
+.stmt-fig{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px;
+}
+/* faint vertical text */
+.stmt-vert{
+  position:absolute;right:28px;top:50%;
+  transform:rotate(90deg) translateX(-50%);transform-origin:center center;
+  font-family:var(--f-body);font-size:.44rem;font-weight:200;
+  letter-spacing:6px;text-transform:uppercase;color:rgba(200,169,110,.25);
+  white-space:nowrap;
+}
+
+/* ── LOOKBOOK ── */
+.lookbook{padding:130px 60px;background:var(--bg)}
+.look-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:220px;
+  gap:6px;margin-top:60px;
+}
+.look-item{
+  position:relative;overflow:hidden;
+  background:var(--surface);cursor:none;
+}
+.look-item:nth-child(1){grid-column:span 5;grid-row:span 2}
+.look-item:nth-child(2){grid-column:span 4;grid-row:span 1}
+.look-item:nth-child(3){grid-column:span 3;grid-row:span 2}
+.look-item:nth-child(4){grid-column:span 4;grid-row:span 1}
+.look-item:nth-child(5){grid-column:span 4;grid-row:span 1}
+.look-item:nth-child(6){grid-column:span 4;grid-row:span 1}
+
+.look-inner{
+  width:100%;height:100%;
+  transition:transform .8s var(--ease);
+}
+.look-item:hover .look-inner{transform:scale(1.08)}
+.look-veil{
+  position:absolute;inset:0;
+  background:rgba(7,7,10,.5);
+  opacity:0;transition:opacity .4s;z-index:2;
+}
+.look-item:hover .look-veil{opacity:1}
+.look-cap{
+  position:absolute;bottom:18px;left:18px;right:18px;z-index:3;
+  font-family:var(--f-serif);font-style:italic;
+  font-size:1.15rem;color:var(--white);
+  opacity:0;transform:translateY(6px);
+  transition:opacity .4s,transform .4s;
+}
+.look-item:hover .look-cap{opacity:1;transform:translateY(0)}
+
+/* ── STORY BAR ── */
+.story-bar{
+  background:var(--gold);
+  padding:80px 60px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.sb-left h2{
+  font-family:var(--f-serif);font-size:clamp(2.2rem,4.5vw,4.2rem);
+  font-weight:300;color:var(--bg);line-height:1;
+  margin-bottom:16px;
+}
+.sb-left h2 em{font-style:italic}
+.sb-left p{
+  font-family:var(--f-dm);font-style:italic;
+  color:rgba(7,7,10,.55);font-size:1rem;line-height:1.8;
+}
+.sb-right{display:flex;flex-direction:column;gap:20px}
+.sb-row{
+  display:flex;align-items:center;gap:20px;
+  padding-bottom:20px;border-bottom:1px solid rgba(7,7,10,.1);
+}
+.sb-row:last-child{border-bottom:none;padding-bottom:0}
+.sb-num{
+  font-family:var(--f-serif);font-size:2.2rem;
+  font-weight:300;color:rgba(7,7,10,.2);line-height:1;
+  min-width:52px;
+}
+.sb-text h4{
+  font-family:var(--f-body);font-size:.58rem;font-weight:300;
+  letter-spacing:3px;text-transform:uppercase;color:var(--bg);margin-bottom:4px;
+}
+.sb-text p{
+  font-family:var(--f-dm);font-style:italic;
+  color:rgba(7,7,10,.5);font-size:.85rem;
+}
+
+/* ── NEWSLETTER ── */
+.nl{
+  background:var(--bg2);
+  padding:120px 60px;
+  display:grid;grid-template-columns:1.2fr 1fr;
+  gap:100px;align-items:center;
+}
+.nl-head{
+  font-family:var(--f-serif);font-size:clamp(2.2rem,4.5vw,4.5rem);
+  font-weight:300;line-height:1;margin-bottom:18px;
+}
+.nl-head em{font-style:italic;color:var(--gold)}
+.nl-desc{
+  font-family:var(--f-dm);font-style:italic;
+  color:var(--muted);font-size:.95rem;line-height:1.8;
+}
+.nl-form{display:flex;flex-direction:column;gap:0}
+.nl-field{
+  background:transparent;border:none;
+  border-bottom:1px solid var(--line);
+  padding:16px 4px;
+  font-family:var(--f-body);font-size:.65rem;font-weight:200;
+  letter-spacing:3px;color:var(--white);outline:none;
+  transition:border-color .3s;margin-bottom:16px;
+}
+.nl-field::placeholder{color:rgba(240,237,232,.2);text-transform:uppercase;letter-spacing:4px}
+.nl-field:focus{border-bottom-color:var(--gold)}
+.nl-submit{
+  align-self:flex-start;margin-top:8px;
+  background:transparent;
+  border:1px solid rgba(200,169,110,.35);
+  padding:15px 48px;cursor:none;
+  font-family:var(--f-body);font-size:.52rem;font-weight:200;
+  letter-spacing:5px;text-transform:uppercase;color:var(--gold);
+  transition:background .4s,color .4s;position:relative;overflow:hidden;
+}
+.nl-submit::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease2);
+}
+.nl-submit:hover::before{transform:scaleX(1)}
+.nl-submit:hover{color:var(--bg)}
+.nl-submit span{position:relative;z-index:1}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg);
+  padding:80px 60px 40px;
+  border-top:1px solid var(--line);
+}
+.ft-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;padding-bottom:60px;
+  border-bottom:1px solid var(--line);margin-bottom:36px;
+}
+.ft-logo{
+  font-family:var(--f-serif);font-size:1.8rem;font-weight:300;
+  letter-spacing:8px;text-transform:uppercase;color:var(--white);
+  margin-bottom:16px;
+}
+.ft-logo em{color:var(--gold);font-style:italic}
+.ft-tagline{
+  font-family:var(--f-dm);font-style:italic;
+  color:rgba(240,237,232,.25);font-size:.88rem;line-height:1.8;
+  max-width:260px;margin-bottom:28px;
+}
+.ft-socials{display:flex;gap:16px}
+.ft-socials a{
+  display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border:1px solid var(--line);
+  color:var(--muted);text-decoration:none;
+  font-size:.6rem;transition:border-color .3s,color .3s;
+}
+.ft-socials a:hover{border-color:var(--gold);color:var(--gold)}
+.ft-col h5{
+  font-family:var(--f-body);font-size:.48rem;font-weight:200;
+  letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;
+}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ft-col ul a{
+  font-family:var(--f-body);font-size:.75rem;font-weight:200;
+  letter-spacing:.5px;color:rgba(240,237,232,.28);
+  text-decoration:none;transition:color .3s;
+}
+.ft-col ul a:hover{color:var(--white)}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center}
+.ft-copy,.ft-origin{
+  font-family:var(--f-body);font-size:.46rem;font-weight:200;
+  letter-spacing:3px;text-transform:uppercase;
+}
+.ft-copy{color:rgba(240,237,232,.15)}
+.ft-origin{color:rgba(200,169,110,.25)}
+
+/* ── GITHUB GUIDE MODAL ── */
+.gh-overlay{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(7,7,10,.95);backdrop-filter:blur(20px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;
+}
+.gh-overlay.show{opacity:1;visibility:visible}
+.gh-modal{
+  background:var(--bg2);
+  border:1px solid rgba(200,169,110,.15);
+  max-width:700px;width:90%;
+  max-height:88vh;overflow-y:auto;
+  padding:52px;position:relative;
+}
+.gh-close{
+  position:absolute;top:20px;right:20px;
+  background:none;border:1px solid var(--line);
+  color:var(--muted);cursor:none;
+  width:36px;height:36px;font-size:.9rem;
+  transition:border-color .3s,color .3s;
+}
+.gh-close:hover{border-color:var(--gold);color:var(--gold)}
+.gh-modal h2{
+  font-family:var(--f-serif);font-size:2rem;font-weight:300;
+  margin-bottom:8px;color:var(--white);
+}
+.gh-modal h2 em{font-style:italic;color:var(--gold)}
+.gh-subtitle{
+  font-family:var(--f-dm);font-style:italic;
+  color:var(--muted);font-size:.88rem;margin-bottom:40px;
+}
+.gh-step{
+  display:flex;gap:20px;margin-bottom:28px;
+  padding-bottom:28px;border-bottom:1px solid var(--line);
+}
+.gh-step:last-of-type{border-bottom:none;margin-bottom:0}
+.gh-n{
+  font-family:var(--f-serif);font-size:2.2rem;font-weight:300;
+  color:rgba(200,169,110,.2);line-height:1;min-width:36px;
+}
+.gh-step-body h4{
+  font-family:var(--f-body);font-size:.6rem;font-weight:300;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:8px;
+}
+.gh-step-body p{
+  font-family:var(--f-dm);font-style:italic;
+  color:rgba(240,237,232,.5);font-size:.88rem;line-height:1.7;
+}
+.gh-code{
+  background:rgba(200,169,110,.06);
+  border:1px solid rgba(200,169,110,.12);
+  padding:10px 16px;margin-top:10px;
+  font-family:monospace;font-size:.72rem;
+  color:var(--gold2);letter-spacing:.5px;
+  border-left:2px solid var(--gold);
+}
+.gh-tip{
+  background:rgba(200,169,110,.06);
+  border:1px solid rgba(200,169,110,.15);
+  padding:16px 20px;margin-top:32px;
+  font-family:var(--f-body);font-size:.6rem;font-weight:200;
+  letter-spacing:1px;color:var(--gold);line-height:1.7;
+}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:translateY(0)}
+
+/* GitHub button */
+.gh-trigger{
+  position:fixed;bottom:32px;right:32px;z-index:200;
+  display:flex;align-items:center;gap:10px;
+  background:var(--gold);color:var(--bg);
+  border:none;
+  padding:14px 22px;cursor:none;
+  font-family:var(--f-body);font-size:.52rem;font-weight:400;
+  letter-spacing:3px;text-transform:uppercase;
+  transition:background .3s;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  box-shadow:0 0 30px rgba(200,169,110,.25);
+  opacity:0;animation:fadeIn 1s 3s forwards;
+}
+.gh-trigger:hover{background:var(--gold2)}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-logo">Nexa<span>loom</span></div>
+  <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
+  <div class="pre-pct">Kathmandu · Nepal · Est. 2024</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- GITHUB DEPLOY GUIDE (modal) -->
+<div class="gh-overlay" id="ghOverlay">
+  <div class="gh-modal">
+    <button class="gh-close" onclick="closeGh()">✕</button>
+    <h2>Deploy on <em>GitHub Pages</em></h2>
+    <p class="gh-subtitle">Your NEXAloom website live for free — step by step, 10 minutes max.</p>
+
+    <div class="gh-step">
+      <div class="gh-n">1</div>
+      <div class="gh-step-body">
+        <h4>Save this file as index.html</h4>
+        <p>Open Notepad (Windows) or TextEdit (Mac). Paste the full website code. Save the file and name it exactly:</p>
+        <div class="gh-code">index.html</div>
+        <p style="margin-top:8px">⚠️ Make sure it's .html not .txt — in Notepad choose "All Files" when saving.</p>
+      </div>
+    </div>
+
+    <div class="gh-step">
+      <div class="gh-n">2</div>
+      <div class="gh-step-body">
+        <h4>Create a free GitHub account</h4>
+        <p>Go to <strong style="color:var(--gold)">github.com</strong> → click Sign Up → enter your email, password, username. Verify your email. Done.</p>
+      </div>
+    </div>
+
+    <div class="gh-step">
+      <div class="gh-n">3</div>
+      <div class="gh-step-body">
+        <h4>Create a new repository</h4>
+        <p>Click the green "New" button or the + icon at top right → "New repository". Name it exactly:</p>
+        <div class="gh-code">nexaloom</div>
+        <p style="margin-top:8px">Set it to <strong style="color:var(--gold)">Public</strong>. Check "Add a README file". Click "Create repository".</p>
+      </div>
+    </div>
+
+    <div class="gh-step">
+      <div class="gh-n">4</div>
+      <div class="gh-step-body">
+        <h4>Upload your index.html file</h4>
+        <p>Inside your new repository, click <strong style="color:var(--gold)">"Add file" → "Upload files"</strong>. Drag your index.html file into the box. Scroll down and click <strong style="color:var(--gold)">"Commit changes"</strong>.</p>
+      </div>
+    </div>
+
+    <div class="gh-step">
+      <div class="gh-n">5</div>
+      <div class="gh-step-body">
+        <h4>Enable GitHub Pages</h4>
+        <p>Go to your repository → click <strong style="color:var(--gold)">Settings</strong> (top menu) → scroll down to <strong style="color:var(--gold)">Pages</strong> (left sidebar) → Under "Source" select <strong style="color:var(--gold)">Deploy from a branch</strong> → choose <strong style="color:var(--gold)">main</strong> branch → click Save.</p>
+      </div>
+    </div>
+
+    <div class="gh-step">
+      <div class="gh-n">6</div>
+      <div class="gh-step-body">
+        <h4>Your site is live! 🎉</h4>
+        <p>Wait 2–3 minutes, then visit your site at:</p>
+        <div class="gh-code">https://YOUR-USERNAME.github.io/nexaloom</div>
+        <p style="margin-top:8px">Replace YOUR-USERNAME with your GitHub username. Share this link with everyone!</p>
+      </div>
+    </div>
+
+    <div class="gh-tip">
+      💡 <strong>Want nexaloom.com?</strong> Buy a domain on Namecheap (~NPR 1,500/yr) and in GitHub Pages settings add it under "Custom domain". Your free hosting + your own .com domain = professional brand.
+    </div>
+  </div>
+</div>
+
+<!-- GITHUB BUTTON -->
+<button class="gh-trigger" onclick="openGh()">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+  How to Go Live Free
+</button>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Nexa<em>loom</em></a>
+  <ul class="nav-links">
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#lookbook">Lookbook</a></li>
+    <li><a href="#story">Story</a></li>
+    <li><a href="#">Bespoke</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-btn">Search</button>
+    <button class="nav-btn">Wishlist</button>
+    <button class="nav-cart-pill">Bag — 0</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-nums">
+    <div class="hero-num active">01</div>
+    <div class="hero-num">02</div>
+    <div class="hero-num">03</div>
+  </div>
+
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      New Collection — 2025
+    </div>
+    <h1 class="hero-h1">
+      NEXT<br>
+      <span class="outline">GEN</span><br>
+      <span class="gold-i">Fashion</span>
+    </h1>
+    <p class="hero-sub">Conceived in the shadow of the Himalayas. Designed for those who live ahead of their time.</p>
+    <div class="hero-actions">
+      <a href="#collections" class="btn-primary"><span>Explore Collection</span></a>
+      <a href="#lookbook" class="btn-ghost-line">Lookbook 2025 →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-figure-wrap">
+      <!-- Ultra-detailed luxury fashion figure -->
+      <svg viewBox="0 0 460 860" xmlns="http://www.w3.org/2000/svg" style="height:86vh;">
+        <defs>
+          <linearGradient id="figA" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1e1c16"/>
+            <stop offset="100%" stop-color="#0e0c0a"/>
+          </linearGradient>
+          <radialGradient id="figGlow" cx="48%" cy="22%" r="55%">
+            <stop offset="0%" stop-color="#c8a96e" stop-opacity=".16"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <radialGradient id="figGlow2" cx="52%" cy="80%" r="45%">
+            <stop offset="0%" stop-color="#6040c0" stop-opacity=".06"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="soft">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- bg panels -->
+        <rect width="460" height="860" fill="url(#figA)"/>
+        <rect width="460" height="860" fill="url(#figGlow)"/>
+        <rect width="460" height="860" fill="url(#figGlow2)"/>
+
+        <!-- Corner deco lines -->
+        <path d="M460 0 L460 90 M460 0 L370 0" stroke="#c8a96e" stroke-width=".8" fill="none" opacity=".2"/>
+        <path d="M0 860 L0 770 M0 860 L90 860" stroke="#c8a96e" stroke-width=".8" fill="none" opacity=".2"/>
+
+        <!-- HEAD -->
+        <ellipse cx="230" cy="96" rx="50" ry="58" fill="#282420"/>
+        <!-- hair suggestion -->
+        <path d="M180 78 Q200 50 230 46 Q260 50 280 78" fill="#1e1a14" stroke="#161210" stroke-width="1"/>
+        <!-- neck -->
+        <rect x="214" y="148" width="32" height="42" rx="6" fill="#242018"/>
+
+        <!-- LONG DRAMATIC OVERCOAT -->
+        <!-- main body -->
+        <path d="M92 195 Q124 172 230 182 Q336 172 368 195 L396 790 Q308 812 230 812 Q152 812 64 790 Z" fill="url(#figA)"/>
+        <path d="M92 195 Q124 172 230 182 Q336 172 368 195 L396 790 Q308 812 230 812 Q152 812 64 790 Z" fill="#141210"/>
+        <!-- coat sheen left -->
+        <path d="M92 195 L154 280 L142 260 L108 190" fill="rgba(200,169,110,.04)"/>
+        <!-- coat sheen right -->
+        <path d="M368 195 L306 280 L318 260 L352 190" fill="rgba(200,169,110,.03)"/>
+
+        <!-- Left lapel -->
+        <path d="M158 180 Q176 242 172 440 L158 810 L140 810 L136 428 Q130 222 112 180 Z" fill="#0e0c08"/>
+        <!-- Right lapel -->
+        <path d="M302 180 Q284 242 288 440 L302 810 L320 810 L324 428 Q330 222 348 180 Z" fill="#0e0c08"/>
+
+        <!-- Collar -->
+        <path d="M114 180 Q166 158 230 168 Q294 158 346 180 L326 206 Q288 196 230 202 Q172 196 134 206 Z" fill="#181410" stroke="#2a2620" stroke-width=".8"/>
+
+        <!-- Lapel edge detail -->
+        <line x1="160" y1="180" x2="174" y2="440" stroke="#1e1a14" stroke-width="1.2"/>
+        <line x1="300" y1="180" x2="286" y2="440" stroke="#1e1a14" stroke-width="1.2"/>
+
+        <!-- Coat buttons -->
+        <circle cx="230" cy="380" r="5.5" fill="none" stroke="#c8a96e" stroke-width=".9" opacity=".45"/>
+        <circle cx="230" cy="460" r="5.5" fill="none" stroke="#c8a96e" stroke-width=".9" opacity=".45"/>
+        <circle cx="230" cy="540" r="5.5" fill="none" stroke="#c8a96e" stroke-width=".9" opacity=".45"/>
+        <circle cx="230" cy="620" r="5.5" fill="none" stroke="#c8a96e" stroke-width=".9" opacity=".35"/>
+
+        <!-- Chest pocket -->
+        <rect x="264" y="258" width="56" height="34" rx="1.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".4"/>
+        <!-- NL monogram -->
+        <text x="292" y="281" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="14" fill="#c8a96e" opacity=".75" font-style="italic">NL</text>
+
+        <!-- Left sleeve -->
+        <path d="M92 195 L38 548 Q28 598 58 614 L116 590 L138 258" fill="#121008" stroke="#1e1a12" stroke-width="1"/>
+        <!-- Left sleeve sheen -->
+        <path d="M92 195 L62 300 L56 340 L38 548 Q48 560 60 558" fill="rgba(200,169,110,.025)"/>
+
+        <!-- Right sleeve -->
+        <path d="M368 195 L422 548 Q432 598 402 614 L344 590 L322 258" fill="#121008" stroke="#1e1a12" stroke-width="1"/>
+
+        <!-- Sleeve fold lines -->
+        <path d="M42 508 Q70 520 90 508" stroke="#1e1a12" stroke-width="1" fill="none" opacity=".7"/>
+        <path d="M418 508 Q390 520 370 508" stroke="#1e1a12" stroke-width="1" fill="none" opacity=".7"/>
+
+        <!-- Cuffs with 3 buttons -->
+        <path d="M30 596 Q58 610 88 598 Q78 626 58 626 Q32 622 30 596 Z" fill="#0e0c08" stroke="#c8a96e" stroke-width=".6" stroke-opacity=".4"/>
+        <circle cx="48" cy="608" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+        <circle cx="58" cy="612" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+        <circle cx="68" cy="608" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+
+        <path d="M430 596 Q402 610 372 598 Q382 626 402 626 Q428 622 430 596 Z" fill="#0e0c08" stroke="#c8a96e" stroke-width=".6" stroke-opacity=".4"/>
+        <circle cx="392" cy="608" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+        <circle cx="402" cy="612" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+        <circle cx="412" cy="608" r="2.5" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".5"/>
+
+        <!-- Coat bottom vent -->
+        <line x1="230" y1="650" x2="230" y2="812" stroke="#0a0806" stroke-width="3"/>
+        <line x1="230" y1="650" x2="230" y2="812" stroke="#1a1610" stroke-width="1.2"/>
+
+        <!-- Welt pockets -->
+        <rect x="76" y="490" width="60" height="6" rx="1.5" fill="#c8a96e" opacity=".18"/>
+        <rect x="324" y="490" width="60" height="6" rx="1.5" fill="#c8a96e" opacity=".18"/>
+
+        <!-- Trouser hems peeking below coat -->
+        <path d="M155 790 L162 858 Q178 864 196 862 L208 792 L230 860 L252 792 L264 862 Q282 864 298 858 L305 790 Z" fill="#141018"/>
+        <!-- Trouser crease -->
+        <line x1="188" y1="800" x2="184" y2="858" stroke="#1c1828" stroke-width=".8"/>
+        <line x1="272" y1="800" x2="276" y2="858" stroke="#1c1828" stroke-width=".8"/>
+        <!-- Trouser side stripe -->
+        <line x1="157" y1="794" x2="153" y2="856" stroke="#c8a96e" stroke-width=".7" opacity=".25"/>
+        <line x1="303" y1="794" x2="307" y2="856" stroke="#c8a96e" stroke-width=".7" opacity=".25"/>
+
+        <!-- Shoes -->
+        <path d="M150 852 Q184 842 218 852 L220 862 Q184 870 150 862 Z" fill="#0c0a08"/>
+        <path d="M242 852 Q276 842 310 852 L310 862 Q276 870 242 862 Z" fill="#0c0a08"/>
+        <!-- Shoe welt detail -->
+        <path d="M152 853 Q186 845 216 853" stroke="#c8a96e" stroke-width=".5" fill="none" opacity=".25"/>
+        <path d="M244 853 Q278 845 308 853" stroke="#c8a96e" stroke-width=".5" fill="none" opacity=".25"/>
+
+        <!-- Ambient ground glow -->
+        <ellipse cx="230" cy="858" rx="160" ry="12" fill="#c8a96e" opacity=".04"/>
+
+        <!-- NEXALOOM watermark faint -->
+        <text x="230" y="680" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="110" fill="#c8a96e" opacity=".025" font-style="italic">N</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- rotating badge -->
+  <div class="hero-badge">
+    <svg viewBox="0 0 100 100" width="100" height="100">
+      <path id="circle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" fill="none"/>
+      <text font-family="'Outfit',sans-serif" font-size="8.5" letter-spacing="5.2" fill="rgba(200,169,110,.5)" font-weight="200" text-transform="uppercase">
+        <textPath href="#circle">NEXAloom · KATHMANDU · NEPAL ·</textPath>
+      </text>
+      <text x="50" y="55" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="14" fill="rgba(200,169,110,.7)" font-style="italic">SS</text>
+      <text x="50" y="66" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="rgba(200,169,110,.4)" font-weight="200" letter-spacing="1">2025</text>
+    </svg>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item">NEXAloom</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Future of Fashion</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Kathmandu Origin</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Premium Collection SS 2025</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Next Generation Style</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Made in Nepal</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">NEXAloom</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Future of Fashion</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Kathmandu Origin</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Premium Collection SS 2025</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Next Generation Style</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Made in Nepal</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<section class="collections rv" id="collections">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eye">New Arrivals</div>
+      <h2 class="sec-title">The <em>2025</em><br>Collection</h2>
+    </div>
+    <div>
+      <p class="sec-sub">Forty-two pieces of considered design</p>
+      <br>
+      <a href="#products" class="btn-ghost-line">Shop All Pieces →</a>
+    </div>
+  </div>
+
+  <div class="col-bento">
+    <!-- FEATURE: Overcoat -->
+    <div class="col-tile rv">
+      <div class="col-tile-inner">
+        <svg viewBox="0 0 480 860" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+          <defs>
+            <radialGradient id="c1" cx="42%" cy="20%" r="65%">
+              <stop offset="0%" stop-color="#1e1c16" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#07070a"/>
+            </radialGradient>
+          </defs>
+          <rect width="480" height="860" fill="url(#c1)"/>
+          <path d="M94 220 Q136 196 240 206 Q344 196 386 220 L418 798 Q322 820 240 820 Q158 820 62 798 Z" fill="#161410"/>
+          <path d="M94 220 L42 568 Q32 618 62 634 L124 610 L146 278" fill="#121008"/>
+          <path d="M386 220 L438 568 Q448 618 418 634 L356 610 L334 278" fill="#121008"/>
+          <path d="M112 204 Q170 180 240 190 Q310 180 368 204 L346 228 Q302 218 240 224 Q178 218 134 228 Z" fill="#1c1a12"/>
+          <path d="M162 200 Q178 264 174 460 L160 818 L142 818 L138 446 Q132 242 112 200 Z" fill="#0e0c08"/>
+          <path d="M318 200 Q302 264 306 460 L320 818 L338 818 L342 446 Q348 242 368 200 Z" fill="#0e0c08"/>
+          <circle cx="240" cy="410" r="6" fill="none" stroke="#c8a96e" stroke-width="1" opacity=".45"/>
+          <circle cx="240" cy="500" r="6" fill="none" stroke="#c8a96e" stroke-width="1" opacity=".45"/>
+          <circle cx="240" cy="590" r="6" fill="none" stroke="#c8a96e" stroke-width="1" opacity=".35"/>
+          <rect x="268" y="276" width="60" height="36" rx="1.5" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".45"/>
+          <text x="298" y="300" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="14" fill="#c8a96e" opacity=".75" font-style="italic">NL</text>
+          <text x="240" y="720" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="130" fill="#c8a96e" opacity=".03" font-style="italic">N</text>
+          <ellipse cx="240" cy="96" rx="52" ry="60" fill="#201e18"/>
+        </svg>
+      </div>
+      <div class="col-veil"></div>
+      <div class="col-info">
+        <p class="col-cat">Signature Outerwear</p>
+        <h3 class="col-name">The <em>Maison</em><br>Overcoat</h3>
+        <p class="col-price">NPR 18,500</p>
+        <span class="col-arrow">Explore Piece ›</span>
+      </div>
+    </div>
+
+    <!-- Cashmere sweater -->
+    <div class="col-tile rv">
+      <div class="col-tile-inner">
+        <svg viewBox="0 0 340 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+          <rect width="340" height="440" fill="#0d1a28"/>
+          <rect width="340" height="440" fill="url(#figGlow)"/>
+          <path d="M68 150 Q98 128 170 138 Q242 128 272 150 L284 400 Q226 414 170 414 Q114 414 56 400 Z" fill="#0f1e30"/>
+          <g stroke="#162036" stroke-width="2" fill="none" opacity=".7">
+            <path d="M76 168 Q90 178 102 168 Q114 158 126 168 Q138 178 150 168 Q162 158 174 168 Q186 178 198 168 Q210 158 222 168 Q234 178 246 168 Q258 158 270 168"/>
+            <path d="M74 184 Q90 194 102 184 Q114 174 126 184 Q138 194 150 184 Q162 174 174 184 Q186 194 198 184 Q210 174 222 184 Q234 194 246 184 Q258 174 272 184"/>
+            <path d="M72 200 Q90 210 102 200 Q114 190 126 200 Q138 210 150 200 Q162 190 174 200 Q186 210 198 200 Q210 190 222 200 Q234 210 246 200 Q258 190 274 200"/>
+          </g>
+          <path d="M118 134 Q170 118 222 134 L216 114 Q170 100 124 114 Z" fill="#162036"/>
+          <path d="M105 248 L126 218 L142 232 L170 202 L198 232 L214 218 L235 248 Z" fill="none" stroke="#c8a96e" stroke-width="1.5" opacity=".65"/>
+          <text x="170" y="272" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="10" fill="#c8a96e" letter-spacing="3" opacity=".5" font-style="italic">NEXAloom</text>
+          <path d="M68 150 L28 318 Q22 352 46 362 L88 346 L102 194" fill="#0e1a2a"/>
+          <path d="M272 150 L312 318 Q318 352 294 362 L252 346 L238 194" fill="#0e1a2a"/>
+          <ellipse cx="170" cy="76" rx="42" ry="48" fill="#1a2438"/>
+        </svg>
+      </div>
+      <div class="col-veil"></div>
+      <div class="col-info">
+        <p class="col-cat">Premium Knitwear</p>
+        <h3 class="col-name"><em>Alpine</em> Cashmere</h3>
+        <p class="col-price">NPR 9,800</p>
+        <span class="col-arrow">Explore ›</span>
+      </div>
+    </div>
+
+    <!-- Cargo pants -->
+    <div class="col-tile rv">
+      <div class="col-tile-inner">
+        <svg viewBox="0 0 340 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+          <rect width="340" height="440" fill="#1a1208"/>
+          <path d="M84 32 L256 32 L264 228 L200 244 L170 228 L140 244 L76 228 Z" fill="#1e1610" stroke="#2a2014" stroke-width="1"/>
+          <path d="M76 228 L140 244 L126 432 Q110 438 96 436 L68 432 Z" fill="#1c1410" stroke="#2a2014" stroke-width="1"/>
+          <path d="M264 228 L200 244 L214 432 Q230 438 244 436 L272 432 Z" fill="#1c1410" stroke="#2a2014" stroke-width="1"/>
+          <rect x="82" y="30" width="176" height="22" rx="2" fill="#141008" stroke="#c8a96e" stroke-width=".8" stroke-opacity=".4"/>
+          <line x1="76" y1="56" x2="66" y2="430" stroke="#c8a96e" stroke-width="1.8" opacity=".45"/>
+          <line x1="264" y1="56" x2="274" y2="430" stroke="#c8a96e" stroke-width="1.8" opacity=".45"/>
+          <rect x="70" y="286" width="50" height="58" rx="2" fill="#141008" stroke="#c8a96e" stroke-width=".8" stroke-opacity=".3"/>
+          <rect x="220" y="286" width="50" height="58" rx="2" fill="#141008" stroke="#c8a96e" stroke-width=".8" stroke-opacity=".3"/>
+          <text x="95" y="320" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="11" fill="#c8a96e" opacity=".55" font-style="italic">NL</text>
+          <text x="245" y="320" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="11" fill="#c8a96e" opacity=".55" font-style="italic">25</text>
+          <rect x="114" y="26" width="9" height="26" rx="1" fill="#0e0c06"/>
+          <rect x="151" y="26" width="9" height="24" rx="1" fill="#0e0c06"/>
+          <rect x="218" y="26" width="9" height="26" rx="1" fill="#0e0c06"/>
+          <rect x="64" y="418" width="54" height="14" rx="2" fill="#100e08"/>
+          <rect x="222" y="418" width="54" height="14" rx="2" fill="#100e08"/>
+        </svg>
+      </div>
+      <div class="col-veil"></div>
+      <div class="col-info">
+        <p class="col-cat">Premium Bottoms</p>
+        <h3 class="col-name"><em>Tactical</em> Cargo</h3>
+        <p class="col-price">NPR 6,800</p>
+        <span class="col-arrow">Explore ›</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products rv" id="products">
+  <div class="sec-head rv">
+    <div>
+      <div class="sec-eye">The Atelier</div>
+      <h2 class="sec-title">Signature<br><em>Pieces</em></h2>
+    </div>
+    <a href="#" class="btn-ghost-line">Full Collection →</a>
+  </div>
+
+  <div class="tabs rv">
+    <button class="tab on">All</button>
+    <button class="tab">T-Shirts</button>
+    <button class="tab">Sweaters</button>
+    <button class="tab">Jackets</button>
+    <button class="tab">Trousers</button>
+  </div>
+
+  <div class="prod-grid">
+
+    <!-- T1: White Himalaya -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag new">New</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#e8e0d4"/>
+            <path d="M65 78 Q90 58 140 68 Q190 58 215 78 L224 308 Q184 318 140 318 Q96 318 56 308 Z" fill="#e2d8cc" stroke="#d0c4b2" stroke-width="1"/>
+            <path d="M65 78 L28 188 Q22 214 44 222 L82 210 L92 104" fill="#ddd4c8" stroke="#d0c4b2" stroke-width="1"/>
+            <path d="M215 78 L252 188 Q258 214 236 222 L198 210 L188 104" fill="#ddd4c8" stroke="#d0c4b2" stroke-width="1"/>
+            <path d="M100 66 Q140 78 180 66" fill="none" stroke="#b8a890" stroke-width="1.5" opacity=".6"/>
+            <!-- Himalaya mountain art -->
+            <path d="M88 218 L108 183 L123 198 L140 162 L157 198 L172 183 L192 218 Z" fill="none" stroke="#3c2810" stroke-width="1.8" opacity=".7"/>
+            <circle cx="140" cy="148" r="12" fill="none" stroke="#3c2810" stroke-width="1.2" opacity=".5"/>
+            <line x1="140" y1="130" x2="140" y2="124" stroke="#3c2810" stroke-width="1.2" opacity=".4"/>
+            <line x1="153" y1="134" x2="157" y2="129" stroke="#3c2810" stroke-width="1.2" opacity=".4"/>
+            <line x1="157" y1="148" x2="163" y2="148" stroke="#3c2810" stroke-width="1.2" opacity=".4"/>
+            <line x1="127" y1="134" x2="123" y2="129" stroke="#3c2810" stroke-width="1.2" opacity=".4"/>
+            <line x1="123" y1="148" x2="117" y2="148" stroke="#3c2810" stroke-width="1.2" opacity=".4"/>
+            <text x="140" y="241" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="10" fill="#3c2810" letter-spacing="3.5" opacity=".6" font-style="italic">NEXAloom</text>
+            <text x="140" y="255" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="5.5" fill="#8a6a40" letter-spacing="4" opacity=".4" font-weight="200">KATHMANDU · NEPAL</text>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name">The <em>Summit</em> Tee</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 2,800</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#e8e0d4"></div>
+          <div class="dot" style="background:#07070a"></div>
+          <div class="dot" style="background:#c8a96e"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T2: Black Monogram -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag ltd">Limited</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#07070a"/>
+            <path d="M65 78 Q90 58 140 68 Q190 58 215 78 L224 308 Q184 318 140 318 Q96 318 56 308 Z" fill="#0e0e14" stroke="#181820" stroke-width="1"/>
+            <path d="M65 78 L28 188 Q22 214 44 222 L82 210 L92 104" fill="#0c0c12" stroke="#181820" stroke-width="1"/>
+            <path d="M215 78 L252 188 Q258 214 236 222 L198 210 L188 104" fill="#0c0c12" stroke="#181820" stroke-width="1"/>
+            <path d="M100 66 Q140 76 180 66" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".35"/>
+            <text x="140" y="240" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="100" fill="#c8a96e" opacity=".07" font-style="italic">N</text>
+            <!-- geometric diamond -->
+            <polygon points="140,148 178,196 140,244 102,196" fill="none" stroke="#c8a96e" stroke-width="1.2" opacity=".45"/>
+            <polygon points="140,158 168,196 140,234 112,196" fill="none" stroke="#c8a96e" stroke-width=".6" opacity=".22"/>
+            <circle cx="140" cy="196" r="5" fill="#c8a96e" opacity=".65"/>
+            <text x="140" y="260" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="10" fill="#c8a96e" letter-spacing="3" opacity=".55" font-style="italic">NEXAloom</text>
+            <text x="140" y="273" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="5.5" fill="#8a6a40" letter-spacing="4" opacity=".35" font-weight="200">KATHMANDU · NEPAL</text>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Monogram</em> Tee</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 3,200</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#07070a"></div>
+          <div class="dot" style="background:#141028"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sweater: Camel Turtleneck -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag new">New</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#c8a060"/>
+            <path d="M55 128 Q84 110 140 118 Q196 110 225 128 L236 342 Q190 354 140 354 Q90 354 44 342 Z" fill="#c29458" stroke="#b08040" stroke-width="1"/>
+            <g stroke="#b08040" stroke-width="2" fill="none" opacity=".65">
+              <path d="M63 144 Q78 154 90 144 Q102 134 114 144 Q126 154 138 144 Q150 134 162 144 Q174 154 186 144 Q198 134 210 144 Q222 154 234 144 Q246 134 256 144"/>
+              <path d="M61 160 Q78 170 90 160 Q102 150 114 160 Q126 170 138 160 Q150 150 162 160 Q174 170 186 160 Q198 150 210 160 Q222 170 234 160 Q246 150 258 160"/>
+              <path d="M59 176 Q78 186 90 176 Q102 166 114 176 Q126 186 138 176 Q150 166 162 176 Q174 186 186 176 Q198 166 210 176 Q222 186 234 176 Q246 166 260 176"/>
+              <path d="M57 192 Q78 202 90 192 Q102 182 114 192 Q126 202 138 192 Q150 182 162 192 Q174 202 186 192 Q198 182 210 192 Q222 202 234 192 Q246 182 262 192"/>
+            </g>
+            <path d="M106 110 Q140 100 174 110 L170 92 Q140 84 110 92 Z" fill="#b08040"/>
+            <g stroke="#906030" stroke-width="1.5" fill="none" opacity=".6">
+              <path d="M108 92 Q140 88 172 92"/>
+              <path d="M107 98 Q140 94 173 98"/>
+              <path d="M107 104 Q140 100 173 104"/>
+            </g>
+            <text x="170" y="255" font-family="'Bodoni Moda',serif" font-size="11" fill="#5c3010" opacity=".45" font-style="italic">NL</text>
+            <path d="M55 128 L16 290 Q10 324 34 334 L76 318 L90 170" fill="#be9050" stroke="#b08040" stroke-width="1"/>
+            <path d="M225 128 L264 290 Q270 324 246 334 L204 318 L210 170" fill="#be9050" stroke="#b08040" stroke-width="1"/>
+            <rect x="12" y="321" width="28" height="14" rx="3" fill="#a07040"/>
+            <rect x="240" y="321" width="28" height="14" rx="3" fill="#a07040"/>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Camel</em> Turtleneck</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 6,400</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#c8a060"></div>
+          <div class="dot" style="background:#e8e0d4"></div>
+          <div class="dot" style="background:#07070a"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blazer: Navy -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#0d1520"/>
+            <path d="M60 120 Q88 100 140 110 Q192 100 220 120 L232 328 Q188 340 140 340 Q92 340 48 328 Z" fill="#101828"/>
+            <path d="M108 108 Q128 152 124 274 L112 328 L98 328 L96 264 Q92 144 72 108 Z" fill="#0c1420"/>
+            <path d="M172 108 Q152 152 156 274 L168 328 L182 328 L184 264 Q188 144 208 108 Z" fill="#0c1420"/>
+            <path d="M72 108 Q104 96 140 102 Q176 96 208 108 L196 122 Q170 116 140 120 Q110 116 84 122 Z" fill="#141e2e"/>
+            <line x1="140" y1="120" x2="140" y2="326" stroke="#c8a96e" stroke-width=".6" opacity=".25" stroke-dasharray="3 5"/>
+            <rect x="154" y="160" width="50" height="28" rx="1.5" fill="#0a1220" stroke="#c8a96e" stroke-width=".8" opacity=".5"/>
+            <text x="179" y="179" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="12" fill="#c8a96e" opacity=".7" font-style="italic">NL</text>
+            <path d="M60 120 L22 270 Q16 302 40 312 L80 298 L92 164" fill="#0e1a28"/>
+            <path d="M220 120 L258 270 Q264 302 240 312 L200 298 L188 164" fill="#0e1a28"/>
+            <circle cx="30" cy="300" r="3" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".45"/>
+            <circle cx="40" cy="305" r="3" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".45"/>
+            <circle cx="250" cy="300" r="3" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".45"/>
+            <circle cx="240" cy="305" r="3" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".45"/>
+            <rect x="56" y="254" width="52" height="5" rx="1.5" fill="#c8a96e" opacity=".18"/>
+            <rect x="172" y="254" width="52" height="5" rx="1.5" fill="#c8a96e" opacity=".18"/>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name">NEXA <em>Blazer</em></p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 14,500</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#0d1520"></div>
+          <div class="dot" style="background:#1a1814"></div>
+          <div class="dot" style="background:#201828"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T3: Orbit dark slate -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag new">New</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#141420"/>
+            <path d="M65 78 Q90 58 140 68 Q190 58 215 78 L224 308 Q184 318 140 318 Q96 318 56 308 Z" fill="#18182a" stroke="#22223a" stroke-width="1"/>
+            <path d="M65 78 L28 188 Q22 214 44 222 L82 210 L92 104" fill="#141428" stroke="#22223a" stroke-width="1"/>
+            <path d="M215 78 L252 188 Q258 214 236 222 L198 210 L188 104" fill="#141428" stroke="#22223a" stroke-width="1"/>
+            <path d="M100 66 Q140 76 180 66" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".3"/>
+            <circle cx="140" cy="196" r="62" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".18"/>
+            <circle cx="140" cy="196" r="46" fill="none" stroke="#c8a96e" stroke-width=".8" opacity=".26"/>
+            <circle cx="140" cy="196" r="30" fill="none" stroke="#c8a96e" stroke-width=".9" opacity=".36"/>
+            <circle cx="140" cy="196" r="13" fill="none" stroke="#c8a96e" stroke-width="1" opacity=".5"/>
+            <line x1="140" y1="128" x2="140" y2="264" stroke="#c8a96e" stroke-width=".6" opacity=".18"/>
+            <line x1="72" y1="196" x2="208" y2="196" stroke="#c8a96e" stroke-width=".6" opacity=".18"/>
+            <text x="140" y="200" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="8.5" fill="#c8a96e" letter-spacing="3.5" opacity=".55" font-style="italic">NEXAloom</text>
+            <text x="140" y="285" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="5.5" fill="#c8a96e" letter-spacing="4" opacity=".28" font-weight="200">KATHMANDU · NEPAL</text>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Orbit</em> Tee</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 2,900</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#141420"></div>
+          <div class="dot" style="background:#e8e0d4"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wide leg trouser -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#e2d8c8"/>
+            <path d="M74 22 L206 22 L214 194 L156 206 L140 192 L124 206 L66 194 Z" fill="#ddd0be" stroke="#c8bca8" stroke-width="1"/>
+            <path d="M66 194 L124 206 L102 354 Q86 360 70 357 L42 353 Z" fill="#d8ccba" stroke="#c8bca8" stroke-width="1"/>
+            <path d="M214 194 L156 206 L178 354 Q194 360 210 357 L238 353 Z" fill="#d8ccba" stroke="#c8bca8" stroke-width="1"/>
+            <rect x="72" y="20" width="136" height="20" rx="2" fill="#beb098" stroke="#a89880" stroke-width=".8"/>
+            <line x1="98" y1="44" x2="74" y2="353" stroke="#c8bca8" stroke-width=".8"/>
+            <line x1="182" y1="44" x2="206" y2="353" stroke="#c8bca8" stroke-width=".8"/>
+            <rect x="104" y="16" width="8" height="22" rx="1" fill="#b0a090"/>
+            <rect x="138" y="16" width="8" height="20" rx="1" fill="#b0a090"/>
+            <rect x="170" y="16" width="8" height="22" rx="1" fill="#b0a090"/>
+            <text x="156" y="48" font-family="'Bodoni Moda',serif" font-size="9" fill="#8a7050" opacity=".45" font-style="italic">NL</text>
+            <rect x="39" y="340" width="66" height="13" rx="2" fill="#ccbea8"/>
+            <rect x="175" y="340" width="66" height="13" rx="2" fill="#ccbea8"/>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Wide</em> Leg Trouser</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 7,200</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#e2d8c8"></div>
+          <div class="dot" style="background:#07070a"></div>
+          <div class="dot" style="background:#141420"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ivory cable knit -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag new">New</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#f0ebe0"/>
+            <path d="M55 128 Q84 110 140 118 Q196 110 225 128 L236 342 Q190 354 140 354 Q90 354 44 342 Z" fill="#ece5d8" stroke="#d8d0c0" stroke-width="1"/>
+            <g stroke="#d0c8b4" stroke-width="2.5" fill="none" opacity=".7">
+              <path d="M63 144 Q78 156 90 144 Q102 132 114 144 Q126 156 138 144 Q150 132 162 144 Q174 156 186 144 Q198 132 210 144 Q222 156 234 144 Q246 132 256 144"/>
+              <path d="M61 162 Q78 174 90 162 Q102 150 114 162 Q126 174 138 162 Q150 150 162 162 Q174 174 186 162 Q198 150 210 162 Q222 174 234 162 Q246 150 258 162"/>
+              <path d="M59 180 Q78 192 90 180 Q102 168 114 180 Q126 192 138 180 Q150 168 162 180 Q174 192 186 180 Q198 168 210 180 Q222 192 234 180 Q246 168 260 180"/>
+            </g>
+            <path d="M106 110 Q140 100 174 110 L170 92 Q140 84 110 92 Z" fill="#e0d8c8"/>
+            <text x="170" y="252" font-family="'Bodoni Moda',serif" font-size="11" fill="#8a6a40" opacity=".4" font-style="italic">NL</text>
+            <path d="M55 128 L16 290 Q10 324 34 334 L76 318 L90 170" fill="#e8e0d0" stroke="#d8d0c0" stroke-width="1"/>
+            <path d="M225 128 L264 290 Q270 324 246 334 L204 318 L210 170" fill="#e8e0d0" stroke="#d8d0c0" stroke-width="1"/>
+            <rect x="12" y="321" width="28" height="14" rx="3" fill="#d8d0c0"/>
+            <rect x="240" y="321" width="28" height="14" rx="3" fill="#d8d0c0"/>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Ivory</em> Cable Knit</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 5,800</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#f0ebe0"></div>
+          <div class="dot" style="background:#c8a060"></div>
+          <div class="dot" style="background:#07070a"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T4: Botanical rust -->
+    <div class="prod rv">
+      <div class="prod-img">
+        <div class="prod-tag ltd">Limited</div>
+        <div class="prod-fav">♡</div>
+        <div class="prod-img-inner">
+          <svg viewBox="0 0 280 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="280" height="360" fill="#281008"/>
+            <path d="M65 78 Q90 58 140 68 Q190 58 215 78 L224 308 Q184 318 140 318 Q96 318 56 308 Z" fill="#2e1208" stroke="#3a1c0e" stroke-width="1"/>
+            <path d="M65 78 L28 188 Q22 214 44 222 L82 210 L92 104" fill="#281008" stroke="#3a1c0e" stroke-width="1"/>
+            <path d="M215 78 L252 188 Q258 214 236 222 L198 210 L188 104" fill="#281008" stroke="#3a1c0e" stroke-width="1"/>
+            <path d="M100 66 Q140 76 180 66" fill="none" stroke="#c8a96e" stroke-width="1" opacity=".35"/>
+            <path d="M140 158 Q165 174 168 198 Q165 224 140 232 Q115 224 112 198 Q115 174 140 158 Z" fill="none" stroke="#c8a96e" stroke-width="1.4" opacity=".55"/>
+            <path d="M140 163 Q158 178 160 198 Q158 218 140 224" fill="none" stroke="#c8a96e" stroke-width=".7" opacity=".28"/>
+            <line x1="140" y1="158" x2="140" y2="232" stroke="#c8a96e" stroke-width=".8" opacity=".28"/>
+            <circle cx="118" cy="175" r="2" fill="#c8a96e" opacity=".35"/>
+            <circle cx="162" cy="175" r="2" fill="#c8a96e" opacity=".35"/>
+            <circle cx="112" cy="198" r="2" fill="#c8a96e" opacity=".35"/>
+            <circle cx="168" cy="198" r="2" fill="#c8a96e" opacity=".35"/>
+            <text x="140" y="254" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="9.5" fill="#c8a96e" letter-spacing="3.5" opacity=".55" font-style="italic">NEXAloom</text>
+            <text x="140" y="268" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="5.5" fill="#a07050" letter-spacing="4" opacity=".35" font-weight="200">KATHMANDU · NEPAL</text>
+          </svg>
+        </div>
+        <div class="prod-quick">+ Add to Bag</div>
+      </div>
+      <p class="prod-name"><em>Botanical</em> Tee</p>
+      <div class="prod-meta">
+        <span class="prod-price">NPR 3,100</span>
+        <div class="prod-dots">
+          <div class="dot" style="background:#281008"></div>
+          <div class="dot" style="background:#07070a"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRAND STATEMENT -->
+<section class="statement" id="story">
+  <div class="stmt-left rv">
+    <div class="sec-eye">Maison NEXAloom</div>
+    <h2 class="stmt-quote">Rooted in <em>altitude</em>,<br>built for<br>the future</h2>
+    <p class="stmt-body">NEXAloom was conceived in Kathmandu — where Himalayan craft traditions meet global design ambition. Every garment is a conversation between where we come from and where fashion is going.</p>
+    <div class="stmt-stats">
+      <div class="stmt-stat">
+        <div class="stmt-val"><em>42</em></div>
+        <div class="stmt-label">SS 2025 Pieces</div>
+      </div>
+      <div class="stmt-stat">
+        <div class="stmt-val">100<em>%</em></div>
+        <div class="stmt-label">Nepal Made</div>
+      </div>
+      <div class="stmt-stat">
+        <div class="stmt-val"><em>I</em></div>
+        <div class="stmt-label">First Collection</div>
+      </div>
+      <div class="stmt-stat">
+        <div class="stmt-val">KTM</div>
+        <div class="stmt-label">Origin City</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stmt-right">
+    <div class="stmt-fig rv">
+      <svg viewBox="0 0 420 740" xmlns="http://www.w3.org/2000/svg" style="height:82%;opacity:1;">
+        <defs>
+          <radialGradient id="sglow" cx="50%" cy="28%" r="58%">
+            <stop offset="0%" stop-color="#c8a96e" stop-opacity=".14"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+        </defs>
+        <rect width="420" height="740" fill="#0d0d12"/>
+        <rect width="420" height="740" fill="url(#sglow)"/>
+        <!-- turtleneck + wide trouser outfit -->
+        <ellipse cx="210" cy="78" rx="44" ry="50" fill="#1e1c18"/>
+        <path d="M176 112 Q210 102 244 112 L240 94 Q210 86 180 94 Z" fill="#2a2820"/>
+        <g stroke="#242220" stroke-width="1.5" fill="none" opacity=".6">
+          <path d="M178 94 Q210 90 242 94"/>
+          <path d="M177 100 Q210 96 243 100"/>
+          <path d="M177 106 Q210 102 243 106"/>
+        </g>
+        <path d="M68 148 Q98 130 210 140 Q322 130 352 148 L360 380 Q282 394 210 394 Q138 394 60 380 Z" fill="#1c1a16"/>
+        <g stroke="#222018" stroke-width="1.5" fill="none" opacity=".5">
+          <path d="M76 164 Q90 174 102 164 Q114 154 126 164 Q138 174 150 164 Q162 154 174 164 Q186 174 198 164 Q210 154 222 164 Q234 174 246 164 Q258 154 270 164 Q282 174 294 164 Q306 154 318 164 Q330 174 342 164"/>
+          <path d="M74 180 Q90 190 102 180 Q114 170 126 180 Q138 190 150 180 Q162 170 174 180 Q186 190 198 180 Q210 170 222 180 Q234 190 246 180 Q258 170 270 180 Q282 190 294 180 Q306 170 318 180 Q330 190 344 180"/>
+        </g>
+        <text x="254" y="264" font-family="'Bodoni Moda',serif" font-size="12" fill="#c8a96e" opacity=".5" font-style="italic">NL</text>
+        <path d="M68 148 L30 318 Q24 352 48 362 L90 346 L104 192" fill="#1a1814"/>
+        <path d="M352 148 L390 318 Q396 352 372 362 L330 346 L316 192" fill="#1a1814"/>
+        <!-- wide trousers -->
+        <path d="M64 374 L108 390 L82 732 Q64 740 48 736 L24 730 Z" fill="#161220"/>
+        <path d="M356 374 L312 390 L338 732 Q356 740 372 736 L396 730 Z" fill="#161220"/>
+        <path d="M60 378 L360 378 L356 394 L312 390 L270 382 L210 396 L150 382 L108 390 L64 394 Z" fill="#1a1628"/>
+        <line x1="82" y1="398" x2="70" y2="730" stroke="#201c30" stroke-width=".8"/>
+        <line x1="338" y1="398" x2="350" y2="730" stroke="#201c30" stroke-width=".8"/>
+        <line x1="64" y1="382" x2="52" y2="730" stroke="#c8a96e" stroke-width=".8" opacity=".2"/>
+        <line x1="356" y1="382" x2="368" y2="730" stroke="#c8a96e" stroke-width=".8" opacity=".2"/>
+        <!-- shoes -->
+        <path d="M22 726 Q58 716 92 726 L92 738 Q58 744 22 738 Z" fill="#0c0a08"/>
+        <path d="M328 726 Q362 716 398 726 L398 738 Q362 744 328 738 Z" fill="#0c0a08"/>
+        <path d="M24 727 Q58 719 90 727" stroke="#c8a96e" stroke-width=".5" fill="none" opacity=".2"/>
+        <path d="M330 727 Q364 719 396 727" stroke="#c8a96e" stroke-width=".5" fill="none" opacity=".2"/>
+        <ellipse cx="210" cy="738" rx="180" ry="8" fill="#c8a96e" opacity=".03"/>
+        <text x="210" y="590" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="100" fill="#c8a96e" opacity=".025" font-style="italic">N</text>
+      </svg>
+    </div>
+    <div class="stmt-vert">NEXAloom · Kathmandu · Nepal · Est. 2024</div>
+  </div>
+</section>
+
+<!-- LOOKBOOK -->
+<section class="lookbook rv" id="lookbook">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eye">Visual Stories</div>
+      <h2 class="sec-title">Lookbook<br><em>SS 2025</em></h2>
+    </div>
+    <a href="#" class="btn-ghost-line">Full Lookbook →</a>
+  </div>
+
+  <div class="look-grid">
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 400 440" style="width:100%;height:100%;display:block;">
+          <defs><radialGradient id="lg1" cx="40%" cy="25%" r="65%"><stop offset="0%" stop-color="#2a2018"/><stop offset="100%" stop-color="#07070a"/></radialGradient></defs>
+          <rect width="400" height="440" fill="url(#lg1)"/>
+          <text x="200" y="235" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="130" fill="#c8a96e" opacity=".04" font-style="italic">I</text>
+          <text x="200" y="237" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look One</text>
+          <text x="200" y="260" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">THE OVERCOAT EDIT</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">The Overcoat Edit</div>
+    </div>
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 300 220" style="width:100%;height:100%;display:block;">
+          <rect width="300" height="220" fill="#0f1828"/>
+          <text x="150" y="118" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look Two</text>
+          <text x="150" y="140" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">CASHMERE SERIES</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">The Cashmere Series</div>
+    </div>
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 240 440" style="width:100%;height:100%;display:block;">
+          <defs><radialGradient id="lg3" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#1e1828"/><stop offset="100%" stop-color="#07070a"/></radialGradient></defs>
+          <rect width="240" height="440" fill="url(#lg3)"/>
+          <text x="120" y="235" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look Three</text>
+          <text x="120" y="258" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">TAILORED EVENING</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">Tailored Evening</div>
+    </div>
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 300 220" style="width:100%;height:100%;display:block;">
+          <rect width="300" height="220" fill="#1a1410"/>
+          <text x="150" y="118" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look Four</text>
+          <text x="150" y="140" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">URBAN MINIMAL</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">Urban Minimal</div>
+    </div>
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 300 220" style="width:100%;height:100%;display:block;">
+          <rect width="300" height="220" fill="#141420"/>
+          <text x="150" y="118" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look Five</text>
+          <text x="150" y="140" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">HIMALAYAN ROOTS</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">Himalayan Roots</div>
+    </div>
+    <div class="look-item rv">
+      <div class="look-inner">
+        <svg viewBox="0 0 300 220" style="width:100%;height:100%;display:block;">
+          <rect width="300" height="220" fill="#1a1208"/>
+          <text x="150" y="118" text-anchor="middle" font-family="'Bodoni Moda',serif" font-size="20" fill="#c8a96e" opacity=".3" font-style="italic" letter-spacing="3">Look Six</text>
+          <text x="150" y="140" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="7" fill="#c8a96e" opacity=".2" letter-spacing="5" font-weight="200">CARGO DAYS</text>
+        </svg>
+      </div>
+      <div class="look-veil"></div>
+      <div class="look-cap">Cargo Days</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY BAR -->
+<section class="story-bar rv">
+  <div class="sb-left">
+    <h2>Why <em>NEXAloom</em><br>is different</h2>
+    <p>We don't follow trends. We set the standard for what Nepali fashion looks like on a global stage.</p>
+  </div>
+  <div class="sb-right">
+    <div class="sb-row">
+      <div class="sb-num">01</div>
+      <div class="sb-text">
+        <h4>Himalayan Heritage</h4>
+        <p>Every design is rooted in the ancient craft traditions of the Kathmandu Valley</p>
+      </div>
+    </div>
+    <div class="sb-row">
+      <div class="sb-num">02</div>
+      <div class="sb-text">
+        <h4>Next-Gen Cuts</h4>
+        <p>Silhouettes informed by Tokyo, Paris and Milan — made right here in Nepal</p>
+      </div>
+    </div>
+    <div class="sb-row">
+      <div class="sb-num">03</div>
+      <div class="sb-text">
+        <h4>Premium Materials</h4>
+        <p>Wool, cashmere, and technical fabrics sourced for longevity over fast fashion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="nl rv">
+  <div>
+    <h2 class="nl-head">Join the<br><em>Atelier</em></h2>
+    <p class="nl-desc">Private drops, behind-the-scenes stories, and early access to limited pieces — delivered discreetly.</p>
+  </div>
+  <div class="nl-form">
+    <input class="nl-field" type="text" placeholder="Your Name">
+    <input class="nl-field" type="email" placeholder="Email Address">
+    <button class="nl-submit"><span>Subscribe to Atelier</span></button>
+    <p style="font-family:var(--f-body);font-size:.46rem;font-weight:200;letter-spacing:2px;color:rgba(240,237,232,.15);text-transform:uppercase;margin-top:10px;">Your privacy is respected. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-logo">Nexa<em>loom</em></div>
+      <p class="ft-tagline">Maison de Mode, Kathmandu. Clothes for those who live ahead of their time.</p>
+      <div class="ft-socials">
+        <a href="https://instagram.com/nexaloom" target="_blank">IG</a>
+        <a href="#">FB</a>
+        <a href="#">TT</a>
+        <a href="#">YT</a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="#">T-Shirts</a></li>
+        <li><a href="#">Sweaters</a></li>
+        <li><a href="#">Jackets</a></li>
+        <li><a href="#">Trousers</a></li>
+        <li><a href="#">Accessories</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Maison</h5>
+      <ul>
+        <li><a href="#">About NEXAloom</a></li>
+        <li><a href="#">Craftsmanship</a></li>
+        <li><a href="#">Lookbook</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Help</h5>
+      <ul>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Shipping Nepal</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Care Guide</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 NEXAloom. All rights reserved.</p>
+    <p class="ft-origin">Kathmandu, Nepal ✦ Est. 2024</p>
+  </div>
+</footer>
+
+<script>
+/* ── PRELOADER ── */
+window.addEventListener('load',()=>{
+  let p=0;
+  const t=setInterval(()=>{
+    p+=Math.random()*18;
+    if(p>=100){p=100;clearInterval(t);setTimeout(()=>document.getElementById('preloader').classList.add('out'),400)}
+  },120);
+});
+
+/* ── CURSOR ── */
+const dot=document.getElementById('cur'),ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+});
+(function ar(){
+  rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(ar);
+})();
+document.querySelectorAll('a,button,.prod,.col-tile,.look-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cur-expand'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-expand'));
+});
+
+/* ── NAV STICK ── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60));
+
+/* ── REVEAL ── */
+const rvEls=document.querySelectorAll('.rv');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      const idx=Array.from(rvEls).indexOf(e.target);
+      e.target.style.transitionDelay=(idx%5)*.08+'s';
+      e.target.classList.add('in');
+    }
+  });
+},{threshold:.07});
+rvEls.forEach(el=>io.observe(el));
+
+/* ── TABS ── */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+
+/* ── GITHUB MODAL ── */
+function openGh(){document.getElementById('ghOverlay').classList.add('show')}
+function closeGh(){document.getElementById('ghOverlay').classList.remove('show')}
+document.getElementById('ghOverlay').addEventListener('click',function(e){
+  if(e.target===this)closeGh();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGh()});
+</script>
+</body>
+</html>
