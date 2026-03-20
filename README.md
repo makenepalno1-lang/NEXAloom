@@ -1,2 +1,2 @@
 # NEXAloom
-clothing brand for next gen.
+Clothing brand for next gen.
